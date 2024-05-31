@@ -1,20 +1,12 @@
 // link: https://leetcode.cn/problems/find-missing-and-repeated-values/
 export function findMissingAndRepeatedValues(grid: number[][]): number[] {
-	const set = new Set<number>();
-	const list = grid.flat().sort();
-	const result = [];
-	for (let i = 0; i < list.length; i++) {
-		const n = list[i];
-		if (set.has(n)) {
-			result.push(n);
-		} else {
-			set.add(n);
+	const n = grid.length;
+	const count = Array(n * n + 1).fill(0);
+	count[0] = -1;
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n; j++) {
+			count[grid[i][j]]++;
 		}
 	}
-	for (let i = 1; i < list.length + 1; i++) {
-		if (!set.has(i)) {
-			result.push(i);
-		}
-	}
-	return result;
+	return [count.indexOf(2), count.indexOf(0)];
 }
